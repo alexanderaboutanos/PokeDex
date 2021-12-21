@@ -1,6 +1,8 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
+import uuid from "uuid";
+import axios from "axios";
 
 function useFlip(initialState = true) {
   const [state, setState] = useState(initialState);
@@ -10,4 +12,13 @@ function useFlip(initialState = true) {
   return [state, flip];
 }
 
-export default useFlip;
+function useAxios(URL) {
+  const [data, setData] = useState([]);
+  const addData = async () => {
+    const response = await axios.get(URL);
+    setData((data) => [...data, { ...response.data, id: uuid() }]);
+  };
+  return [data, addData];
+}
+
+export { useFlip, useAxios };
