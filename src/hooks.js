@@ -14,8 +14,9 @@ function useFlip(initialState = true) {
 
 function useAxios(URL) {
   const [data, setData] = useState([]);
-  const addData = async () => {
-    const response = await axios.get(URL);
+  const addData = async (val) => {
+    const sendURL = typeof val === "string" ? URL + val : URL;
+    const response = await axios.get(sendURL);
     setData((data) => [...data, { ...response.data, id: uuid() }]);
   };
   return [data, addData];
